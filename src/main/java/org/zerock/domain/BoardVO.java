@@ -6,12 +6,12 @@ import lombok.Data;
 
 @Data
 public class BoardVO {
-	
-	private Long bno; //번호
-	private String title; //글 제목
-	private String content; //글 내용
-	private String writer; //작성자
-	private Date regdate; //작성일
-	private Date updateDate; //수정일
+
+	private Long bno; // 番号
+	private String title; // タイトル
+	private String content; // 内容
+	private String writer; // 作成者
+	private Date regdate; // 作成日
+	private Date updateDate; // 修正日
 
 }

@@ -8,15 +8,17 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
-@ComponentScan(basePackages="org.zerock.service")
-@MapperScan(basePackages = {"org.zerock.mapper"})
+@ComponentScan(basePackages = { "org.zerock.service", "org.zerock.security" })
+@MapperScan(basePackages = { "org.zerock.mapper" })
+@Import(org.zerock.config.SecurityConfig.class)
 public class RootConfig {
-	
+
 	@Bean
 	public DataSource dataSource() {
 		HikariConfig hikariConfig = new HikariConfig();
@@ -24,17 +26,18 @@ public class RootConfig {
 		hikariConfig.setJdbcUrl("jdbc:log4jdbc:oracle:thin:@//172.30.1.53:1521/XEPDB1");
 		hikariConfig.setUsername("system");
 		hikariConfig.setPassword("tiger");
-		
+
 		HikariDataSource dataSource = new HikariDataSource(hikariConfig);
-		
+
 		return dataSource;
 	}
-	
+
 	@Bean
 	public SqlSessionFactory sqlSessionFactory() throws Exception {
 		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
 		sqlSessionFactory.setDataSource(dataSource());
+
 		return (SqlSessionFactory) sqlSessionFactory.getObject();
 	}
-	
+
 }
